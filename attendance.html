@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attendance Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Attendance Calculator</h2>
+
+  <label>Classes Held:</label>
+  <input type="number" id="held"><br>
+
+  <label>Classes Attended:</label>
+  <input type="number" id="attended"><br>
+
+  <button onclick="calculate()">Check Attendance</button>
+
+  <p id="result"></p>
+
+  <script>
+    function calculate() {
+      const held = parseInt(document.getElementById('held').value);
+      const attended = parseInt(document.getElementById('attended').value);
+
+      if (isNaN(held) || isNaN(attended) || held <= 0 || attended < 0) {
+        document.getElementById('result').innerHTML = "Please enter valid numbers.";
+        return;
+      }
+
+      const percentage = (attended / held) * 100;
+
+      if (percentage >= 75) {
+        document.getElementById('result').innerHTML = 
+          `✅ You are allowed to sit in the exam.<br>Your attendance is ${percentage.toFixed(2)}%.`;
+      } else {
+        const moreClasses = Math.ceil((0.75 * held - attended) / 0.25);
+        document.getElementById('result').innerHTML = 
+          `❌ You are NOT allowed to sit in the exam.<br>` +
+          `You need to attend <strong>${moreClasses}</strong> more classes to reach 75%.<br>` +
+          `Your current attendance is ${percentage.toFixed(2)}%.`;
+      }
+    }
+  </script>
+
+</body>
+</html>
